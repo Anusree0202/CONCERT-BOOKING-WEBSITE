@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #eaeaea;
+        }
+
+        header {
+            background: linear-gradient(90deg, #ff6e7f, #bfe9ff);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        nav {
+            background-color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #eaeaea;
+            font-size: 18px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: #ff6e7f;
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            background: linear-gradient(90deg, #ff6e7f, #bfe9ff);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .logout-btn:hover {
+            background: linear-gradient(90deg, #e05670, #9cccf2);
+            transform: translateY(-3px);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #222;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #ff6e7f;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #1c1c1c;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table, th, td {
+            border: 1px solid #444;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            color: #eaeaea;
+        }
+
+        th {
+            background-color: #333;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #2a2a2a;
+        }
+
+        tr:hover {
+            background-color: #3a3a3a;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(90deg, #42e695, #3bb2b8);
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            background: linear-gradient(90deg, #35c884, #2d989c);
+            transform: translateY(-3px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #222;
+            color: #eaeaea;
+            font-size: 14px;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        My Bookings
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#about-us">About Us</a></li>
+            <li><a href="#contact-us">Contact Us</a></li>
+        </ul>
+        <a href="{% url 'userlogout' %}" class="logout-btn">Logout</a>
+    </nav>
+
+    <div class="container">
+        <h2>Your Bookings</h2>
+        
+        {% if bookings %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Concert Name</th>
+                    <th>Date</th>
+                    <th>Venue</th>
+                    <th>Tickets Booked</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.concert.name }}</td>
+                    <td>{{ booking.concert.date }}</td>
+                    <td>{{ booking.concert.venue }}</td>
+                    <td>{{ booking.tickets_booked }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'delete_booking' booking.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn">Delete Booking</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>You have no bookings yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+
+

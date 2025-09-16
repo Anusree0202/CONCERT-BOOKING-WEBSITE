@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concert List</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #eaeaea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #ff6e7f;
+            margin: 20px 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .buttons-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+        }
+
+        .add-concert, .logout-btn, .view-booking {
+            display: inline-block;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+        .add-concert {
+            background: linear-gradient(90deg, #42e695, #3bb2b8);
+        }
+
+        .add-concert:hover {
+            background: linear-gradient(90deg, #35c884, #2d989c);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .logout-btn {
+            background: linear-gradient(90deg, #ff6e7f, #bfe9ff);
+        }
+
+        .logout-btn:hover {
+            background: linear-gradient(90deg, #e05670, #9cccf2);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .view-booking {
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+        }
+
+        .view-booking:hover {
+            background: linear-gradient(90deg, #5b0db9, #1f63d6);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .table-container {
+            width: 90%;
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #222;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #444;
+        }
+
+        table th {
+            background-color: #ff6e7f;
+            color: white;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #333;
+        }
+
+        table tr:hover {
+            background-color: #444;
+            transition: background-color 0.3s ease;
+        }
+
+        table td {
+            font-size: 14px;
+            color: #eaeaea;
+        }
+
+        table td.actions a {
+            text-decoration: none;
+            padding: 8px 12px;
+            margin: 0 5px;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        table td.actions a.edit {
+            background-color: #2ecc71;
+        }
+
+        table td.actions a.edit:hover {
+            background-color: #27ae60;
+        }
+
+        table td.actions a.delete {
+            background-color: #e74c3c;
+        }
+
+        table td.actions a.delete:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Concert List</h1>
+    <div class="buttons-container">
+        <a href="{% url 'add_concert' %}" class="add-concert">Add New Concert</a>
+        <a href="{% url 'adminlogout' %}" class="logout-btn">Logout</a>
+        <a href="{% url 'admin_booking_list' %}" class="view-booking">View Bookings</a>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Venue</th>
+                    <th>Ticket Price</th>
+                    <th>Available Tickets</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for concert in concerts %}
+                <tr>
+                    <td>{{ concert.id }}</td>
+                    <td>{{ concert.name }}</td>
+                    <td>{{ concert.date }}</td>
+                    <td>{{ concert.time }}</td>
+                    <td>{{ concert.venue }}</td>
+                    <td>₹{{ concert.ticket_price }}</td>
+                    <td>{{ concert.available_tickets }}</td>
+                    <td class="actions">
+                        <a href="{% url 'concert_update' concert.id %}" class="edit">Edit</a>
+                        <a href="{% url 'concert_delete' concert.id %}" class="delete">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+
+
+
+
+

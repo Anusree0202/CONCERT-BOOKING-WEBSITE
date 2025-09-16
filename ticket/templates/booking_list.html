@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Booking List</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #eaeaea;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(90deg, #ff6e7f, #bfe9ff);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #222;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            flex: 1; /* This allows the container to take up available space. */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 36px;
+            color: #ff6e7f;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        th {
+            background: #333;
+            color: #ff6e7f;
+            font-size: 18px;
+            text-transform: uppercase;
+            padding: 15px;
+            border-bottom: 3px solid #ff6e7f;
+        }
+
+        td {
+            padding: 15px;
+            text-align: left;
+            font-size: 16px;
+            color: #eaeaea;
+        }
+
+        tr:nth-child(even) {
+            background-color: #1c1c1c;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #1a1a1a;
+        }
+
+        tr:hover {
+            background-color: #2a2a2a;
+            transition: background-color 0.3s ease;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #222;
+            color: #eaeaea;
+            font-size: 14px;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Admin Booking List
+    </header>
+
+    <div class="container">
+        <h1>Booking List</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Concert Name</th>
+                    <th>Tickets Booked</th>
+                    <th>Booking Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.user.username }}</td>
+                    <td>{{ booking.concert.name }}</td>
+                    <td>{{ booking.tickets_booked }}</td>
+                    <td>{{ booking.booking_date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        © 2025 Concert Ticket Mania
+    </footer>
+</body>
+</html>
+
+

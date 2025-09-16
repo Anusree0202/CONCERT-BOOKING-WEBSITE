@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Tickets</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #eaeaea;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #222;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            text-align: center;
+            color: #ff6e7f;
+            margin-bottom: 20px;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #eaeaea;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #eaeaea;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #444;
+            border-radius: 10px;
+            background: #121212;
+            color: #eaeaea;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #ff6e7f;
+            box-shadow: 0 0 8px rgba(255, 110, 127, 0.5);
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px 0;
+            background: linear-gradient(90deg, #42e695, #3bb2b8);
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #35c884, #2d989c);
+            transform: translateY(-3px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #222;
+            color: #eaeaea;
+            font-size: 14px;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        footer a {
+            color: #ff6e7f;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .message {
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    .success { background-color: #4CAF50; color: white; }
+    .error { background-color: #f44336; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Book Tickets</h2>
+        <p><strong>Concert:</strong> {{ concert.name }}</p>
+        <p><strong>Date:</strong> {{ concert.date }}</p>
+        <p><strong>Venue:</strong> {{ concert.venue }}</p>
+        <p><strong>Available Tickets:</strong> {{ concert.available_tickets }}</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="tickets">Number of Tickets:</label>
+                <input type="number" id="tickets" name="tickets" min="1" max="{{ concert.available_tickets }}" required>
+            </div>
+            <button type="submit">Book Tickets</button>
+        </form>
+    </div>
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <p class="message {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+    <footer>
+        &copy; 2025 Concert Ticket Mania | All Rights Reserved | Contact us: <a href="mailto:info@concertticketmania.com">info@concertticketmania.com</a>
+    </footer>
+</body>
+</html>
+

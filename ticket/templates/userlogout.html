@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Logout</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #eaeaea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .logout-container {
+            background: #222;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            width: 350px;
+            text-align: center;
+        }
+
+        .logout-container p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #eaeaea;
+        }
+
+        .logout-container .logout-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, #ff6e7f, #bfe9ff);
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .logout-container .logout-btn:hover {
+            background: linear-gradient(90deg, #e05568, #9ecbe1);
+            transform: translateY(-3px);
+        }
+
+        .logout-container .not-logged-in {
+            font-size: 16px;
+            color: #ff6e7f;
+        }
+
+        .logout-container .login-link {
+            text-decoration: none;
+            color: #42e695;
+            font-weight: bold;
+        }
+
+        .logout-container .login-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="logout-container">
+        {% if user.is_authenticated %}
+            <p>You are currently logged in as <strong>{{ user.username }}</strong>.</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">Log Out</button>
+            </form>
+        {% else %}
+            <p class="not-logged-in">You are not currently logged in.</p>
+            <p><a href="{% url 'userlogin' %}" class="login-link">Login here</a></p>
+        {% endif %}
+    </div>
+</body>
+</html>
